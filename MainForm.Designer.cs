@@ -35,7 +35,6 @@ namespace EmployeeFormsApp
             this.searchInputField = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button4 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -63,7 +62,6 @@ namespace EmployeeFormsApp
             this.panel1.Controls.Add(this.searchInputField);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.dataGridView1);
-            this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.menuStrip1);
@@ -110,16 +108,6 @@ namespace EmployeeFormsApp
             this.dataGridView1.TabIndex = 9;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
-            // 
-            // button4
-            // 
-            this.button4.ForeColor = System.Drawing.Color.Black;
-            this.button4.Location = new System.Drawing.Point(387, 31);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(185, 35);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Поиск сотрудника ";
-            this.button4.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -265,7 +253,6 @@ namespace EmployeeFormsApp
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
