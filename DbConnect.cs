@@ -15,8 +15,8 @@ namespace EmployeeFormsApp
         public DbSet<Education> Educations {  get; set; } 
 
         public DbConnect()
-        {
-            
+        {   
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
         

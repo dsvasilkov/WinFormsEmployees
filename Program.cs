@@ -244,34 +244,34 @@ namespace EmployeeFormsApp
                     DateGrade = new DateTime(2005, 6, 12),
                     Employee = employee3
                 };
-                /*context.Branches.Add(bra1);
-                context.Branches.Add(bra2);
-                context.Branches.Add(bra3);
-                context.Departments.Add(dep1);
-                context.Departments.Add(dep2);  
-                context.Departments.Add(dep3);
-                context.Positions.Add(pos1);
-                context.Positions.Add(pos2);    
-                context.Positions.Add(pos3);
-                context.Positions.Add(pos4);
-                context.Positions.Add(pos5);
-                context.Positions.Add(pos6);
-                context.Employees.Add(employee);
-                context.Employees.Add(employee2);
-                context.Employees.Add(employee3);
-                context.Employees.Add(employee4);
-                context.Educations.Add(education);
-                context.Educations.Add(education2);
-                context.Educations.Add(education3);
-                context.Educations.Add(education4);
-                context.PositionInfos.Add(posInfo1);
-                context.PositionInfos.Add(posInfo2);
-                context.PositionInfos.Add(posInfo3);
-                context.PositionInfos.Add(posInfo4);
-                context.PositionInfos.Add(posInfo5);
-                context.PositionInfos.Add(posInfo6);
-                context.PositionInfos.Add(posInfo7);
-                context.SaveChanges();*/
+                //context.Branches.Add(bra1);
+                //context.Branches.Add(bra2);
+                //context.Branches.Add(bra3);
+                //context.Departments.Add(dep1);
+                //context.Departments.Add(dep2);
+                //context.Departments.Add(dep3);
+                //context.Positions.Add(pos1);
+                //context.Positions.Add(pos2);
+                //context.Positions.Add(pos3);
+                //context.Positions.Add(pos4);
+                //context.Positions.Add(pos5);
+                //context.Positions.Add(pos6);
+                //context.Employees.Add(employee);
+                //context.Employees.Add(employee2);
+                //context.Employees.Add(employee3);
+                //context.Employees.Add(employee4);
+                //context.Educations.Add(education);
+                //context.Educations.Add(education2);
+                //context.Educations.Add(education3);
+                //context.Educations.Add(education4);
+                //context.PositionInfos.Add(posInfo1);
+                //context.PositionInfos.Add(posInfo2);
+                //context.PositionInfos.Add(posInfo3);
+                //context.PositionInfos.Add(posInfo4);
+                //context.PositionInfos.Add(posInfo5);
+                //context.PositionInfos.Add(posInfo6);
+                //context.PositionInfos.Add(posInfo7);
+                context.SaveChanges();
 
 
                 Console.WriteLine($"id {employee.Id}, {employee.Name}, {employee.Surname}");
@@ -281,11 +281,11 @@ namespace EmployeeFormsApp
             string connectionString = "Host=localhost;Database=emloyees;Username=postgres;Password=admin";
             string createFunctionGetEmployees = @"
                 CREATE OR REPLACE FUNCTION GetEmployees()
-                RETURNS TABLE (Имя TEXT, Фамилия TEXT, Отчество TEXT, ""Дата трудоустройства"" TIMESTAMP)
+                RETURNS TABLE ( ID INTEGER, Имя TEXT, Фамилия TEXT, Отчество TEXT, ""Дата трудоустройства"" TIMESTAMP)
                 LANGUAGE plpgsql
                 AS $$
                 BEGIN
-                    RETURN QUERY SELECT e.""Name"", e.""Surname"" , e.""Patronymic"" , e.""HireDate"" FROM employees as e;
+                    RETURN QUERY SELECT e.""Id"", e.""Name"", e.""Surname"" , e.""Patronymic"" , e.""HireDate"" FROM employees as e;
                 END;
                 $$;
             ";

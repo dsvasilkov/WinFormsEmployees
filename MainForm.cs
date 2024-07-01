@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,11 +26,11 @@ namespace EmployeeFormsApp
         }
 
        private void LoadEmployees()
+
        {
             using (var connection = new NpgsqlConnection(connectionString))
             {
                 connection.Open();
-                
                 using (var command = new NpgsqlCommand("SELECT * FROM GetEmployees()", connection))
                 {
                     using (var reader = command.ExecuteReader())
@@ -37,6 +38,7 @@ namespace EmployeeFormsApp
                         var dataTable = new DataTable();
                         dataTable.Load(reader);
                         dataGridView1.DataSource = dataTable;
+                        dataGridView1.Columns[0].Visible = false;
                     }
                 }
             }
@@ -86,6 +88,7 @@ namespace EmployeeFormsApp
                         dataTable.Load(reader);
                         dataGridView1.DataSource = dataTable;
                     }
+                    
                 }
             }
 
@@ -93,17 +96,15 @@ namespace EmployeeFormsApp
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            
-            using (var contex = new DbConnect())
-            {
-                var employee = new Employee();
 
-                    selectedEmployeeId = employee.Id;
-                
+            if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
+            {
+
+                selectedEmployeeId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
             }
-                
-                
-            
+            MessageBox.Show(Convert.ToString(selectedEmployeeId));
         }
+
+        
     }
 }
