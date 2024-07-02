@@ -31,12 +31,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.Surname = new System.Windows.Forms.TextBox();
+            this.Patronymic = new System.Windows.Forms.TextBox();
+            this.Name = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.HireDate = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -69,29 +69,29 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "Отчество";
             // 
-            // textBox1
+            // Surname
             // 
-            this.textBox1.Location = new System.Drawing.Point(330, 53);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(306, 31);
-            this.textBox1.TabIndex = 3;
+            this.Surname.Location = new System.Drawing.Point(330, 53);
+            this.Surname.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Surname.Name = "Surname";
+            this.Surname.Size = new System.Drawing.Size(306, 31);
+            this.Surname.TabIndex = 3;
             // 
-            // textBox2
+            // Patronymic
             // 
-            this.textBox2.Location = new System.Drawing.Point(330, 164);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(306, 31);
-            this.textBox2.TabIndex = 4;
+            this.Patronymic.Location = new System.Drawing.Point(330, 164);
+            this.Patronymic.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Patronymic.Name = "Patronymic";
+            this.Patronymic.Size = new System.Drawing.Size(306, 31);
+            this.Patronymic.TabIndex = 4;
             // 
-            // textBox3
+            // Name
             // 
-            this.textBox3.Location = new System.Drawing.Point(330, 111);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(306, 31);
-            this.textBox3.TabIndex = 5;
+            this.Name.Location = new System.Drawing.Point(330, 111);
+            this.Name.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Name.Name = "Name";
+            this.Name.Size = new System.Drawing.Size(306, 31);
+            this.Name.TabIndex = 5;
             // 
             // button1
             // 
@@ -114,30 +114,30 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Дата устройства";
             // 
-            // textBox4
+            // HireDate
             // 
-            this.textBox4.Location = new System.Drawing.Point(330, 209);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(306, 31);
-            this.textBox4.TabIndex = 8;
+            this.HireDate.Location = new System.Drawing.Point(330, 209);
+            this.HireDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.HireDate.Name = "HireDate";
+            this.HireDate.Size = new System.Drawing.Size(306, 31);
+            this.HireDate.TabIndex = 8;
             // 
             // EmployeesAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 420);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.HireDate);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.Name);
+            this.Controls.Add(this.Patronymic);
+            this.Controls.Add(this.Surname);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "EmployeesAdd";
+            
             this.Text = "Добавление сотрудника ";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -149,11 +149,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox Surname;
+        private System.Windows.Forms.TextBox Patronymic;
+        private System.Windows.Forms.TextBox Name;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox HireDate;
     }
 }

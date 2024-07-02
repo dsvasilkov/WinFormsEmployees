@@ -58,20 +58,22 @@ namespace EmployeeFormsApp
                     textBox2.Text = employee.Surname;
                     textBox3.Text = employee.Patronymic;
                     textBox4.Text = employee.Gender;
-                    dateTimePicker1.Value = employee.BirthDate != null ? employee.BirthDate : DateTime.Now; 
+                    if (employee.BirthDate.HasValue)
+                        dateTimePicker1.Value = employee.BirthDate.Value; 
                     textBox6.Text = employee.Address;
                     //textBox7.Text = string.Join(", ", employee.PositionInfos);
                     textBox8.Text = employee.INN;
                     textBox5.Text = employee.SNILS;
                     textBox17.Text = employee.PhoneNumber;
                     textBox16.Text = employee.Email;
-                    dateTimePicker5.Value = employee.HireDate != null ? employee.HireDate : DateTime.Now; 
+                    dateTimePicker5.Value = employee.HireDate; 
                     textBox18.Text = employee.BranchName;
                     textBox21.Text = employee.DepartmentName;
                     textBox22.Text = employee.DepartmentHead;
                     textBox9.Text = employee.PassportSeries;
                     textBox10.Text = employee.PassportNumber;
-                    dateTimePicker2.Value = employee.PassportIssueDate != null ? employee.PassportIssueDate : DateTime.Now; 
+                    if (employee.PassportIssueDate.HasValue)
+                        dateTimePicker2.Value = employee.PassportIssueDate.Value;
                     textBox19.Text = employee.PassportIssueBy;
                     textBox11.Text = employee.Address;
                 }

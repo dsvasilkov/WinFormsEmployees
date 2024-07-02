@@ -12,7 +12,8 @@ namespace EmployeeFormsApp
 
         public DbSet <PositionInfo> PositionInfos { get; set; }
         public DbSet<Position > Positions { get; set; }
-        public DbSet<Education> Educations {  get; set; } 
+        public DbSet<Education> Educations {  get; set; }
+        public DbSet<TableEmployee> TableEmployee { get; set; }
 
         public DbConnect()
         {   
@@ -22,7 +23,7 @@ namespace EmployeeFormsApp
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=emloyees;Username=postgres;Password=admin");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=employees;Username=postgres;Password=root");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +33,38 @@ namespace EmployeeFormsApp
             modelBuilder.Entity<PositionInfo>().ToTable("positioninfos");
             modelBuilder.Entity<Position>().ToTable("positions");
             modelBuilder.Entity<Education>().ToTable("educations");
+           
+            modelBuilder.Entity<Employee>()
+               .HasOne(e => e.Branch)
+               .WithMany(b => b.Employees)
+               .HasForeignKey(e => e.BranchId)
+               .OnDelete(DeleteBehavior.Cascade)
+               .IsRequired(false);
+
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.Department)
+                .WithMany(d => d.Employees)
+                .HasForeignKey(e => e.DepartmentId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(false);
+
+            modelBuilder.Entity<PositionInfo>()
+                .HasOne(pi => pi.Employee)
+                .WithMany(e => e.PositionInfos)
+                .HasForeignKey(pi => pi.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PositionInfo>()
+                .HasOne(pi => pi.Position)
+                .WithMany(p => p.PositionInfos)
+                .HasForeignKey(pi => pi.PositionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Education>()
+                .HasOne(ed => ed.Employee)
+                .WithMany(e => e.Educations)
+                .HasForeignKey(ed => ed.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

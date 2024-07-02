@@ -179,6 +179,7 @@
     <Compile Include="PositionInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableEmployee.cs" />
     <EmbeddedResource Include="EmployeesAdd.resx">
       <DependentUpon>EmployeesAdd.cs</DependentUpon>
     </EmbeddedResource>

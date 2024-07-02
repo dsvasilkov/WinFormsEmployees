@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,33 +16,31 @@ namespace EmployeeFormsApp
 {
     public partial class MainForm : Form
     {
-        private string connectionString = "Host=localhost;Database=emloyees;Username=postgres;Password=admin";
+        private readonly DbConnect _context;
+        private string connectionString = "Host=localhost;Database=employees;Username=postgres;Password=root";
         private int selectedEmployeeId;
-        public MainForm()
+        public MainForm(DbConnect context)
         {   
             InitializeComponent();
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            // WaitForTable();
-            LoadEmployees();
+            _context = context;
+            this.Load += MainForm_Load;
         }
 
-       private void LoadEmployees()
+        private async void MainForm_Load(object sender, EventArgs e)
+        {
+            await LoadEmployees();
+        }
 
-       {
-            using (var connection = new NpgsqlConnection(connectionString))
-            {
-                connection.Open();
-                using (var command = new NpgsqlCommand("SELECT * FROM GetEmployees()", connection))
-                {
-                    using (var reader = command.ExecuteReader())
-                    {
-                        var dataTable = new DataTable();
-                        dataTable.Load(reader);
-                        dataGridView1.DataSource = dataTable;
-                        dataGridView1.Columns[0].Visible = false;
-                    }
-                }
-            }
+        private async Task LoadEmployees()
+        {
+            var employees = await _context.TableEmployee.FromSqlInterpolated
+                ($"SELECT * FROM GetEmployees()").ToListAsync();
+                    
+            var employeesWithoutId = employees.Select(el =>
+                new { Id = el.Id, Имя = el.Name, Фамилия = el.Surname, Отчество = el.Patronymic, Дата_трудоустройства = el.HireDate }).ToList();
+            dataGridView1.DataSource = employeesWithoutId;
+            dataGridView1.Columns["Id"].Visible = false;
 
         }
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -55,10 +54,16 @@ namespace EmployeeFormsApp
             EmployeesCardChange employeesCardChange = new EmployeesCardChange();
             employeesCardChange.Show();
         }
-        private void addEmployee(object sender, EventArgs e)
+        private async void addEmployee(object sender, EventArgs e)
         {
-            EmployeesAdd employeesAdd = new EmployeesAdd();
+            EmployeesAdd employeesAdd = new EmployeesAdd(_context);
+            
+            var tcs = new TaskCompletionSource<bool>();
+            employeesAdd.EmployeeAdded += (s, args) => tcs.SetResult(true);
             employeesAdd.Show();
+            await tcs.Task;
+            
+            await LoadEmployees();
         }
 
         private void showEmployeeCard(object sender, EventArgs e)
@@ -67,30 +72,35 @@ namespace EmployeeFormsApp
             employeesCardLook.Show();
         }
 
-        private void deleteEmployee(object sender, EventArgs e)
+        private async void deleteEmployee(object sender, EventArgs e)
         {
+            List<int> selectedIds = new List<int>();
 
-        }
-
-        private void searchEmployee(object sender, EventArgs e)
-        {
-            string searchValue = searchInputField.Text;
-            using (var connection = new NpgsqlConnection(connectionString))
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
-                connection.Open();
-
-                using (var command = new NpgsqlCommand("SELECT * FROM SearchEmployee(@search)", connection))
+                if (row.Cells["Id"].Value != null)
                 {
-                    command.Parameters.AddWithValue("@search", searchValue);
-                    using (var reader = command.ExecuteReader())
-                    {
-                        var dataTable = new DataTable();
-                        dataTable.Load(reader);
-                        dataGridView1.DataSource = dataTable;
-                    }
-                    
+                    selectedIds.Add((int)row.Cells["Id"].Value);
                 }
             }
+          
+            await _context.Database.ExecuteSqlInterpolatedAsync
+                ($"CALL DeleteEmployeesByIds({selectedIds.ToArray()})");
+            await LoadEmployees();
+
+        }
+    
+
+        private async void searchEmployee(object sender, EventArgs e)
+        {
+            string searchValue = searchInputField.Text;
+            var employees = await _context.TableEmployee.FromSqlInterpolated
+               ($"SELECT * FROM SearchEmployee({searchValue})").ToListAsync();
+            var employeesWithoutId = employees.Select(el =>
+            new { Имя = el.Name, Фамилия = el.Surname, Отчество = el.Patronymic,
+                Дата_трудоустройства = el.HireDate }).ToList();
+
+            dataGridView1.DataSource = employeesWithoutId;
 
         }
 
@@ -99,12 +109,8 @@ namespace EmployeeFormsApp
 
             if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
             {
-
                 selectedEmployeeId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
             }
-            MessageBox.Show(Convert.ToString(selectedEmployeeId));
         }
-
-        
     }
 }
