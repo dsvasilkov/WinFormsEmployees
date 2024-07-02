@@ -4,10 +4,7 @@ using System.Windows.Forms;
 
 namespace EmployeeFormsApp
 {
-    public enum Gender {
-        man, woman
-    }
-
+    
     public class Employee
     {
         public int Id { get; set; }
@@ -33,6 +30,6 @@ namespace EmployeeFormsApp
         public virtual Branch Branch { get; set; }
         public virtual Department Department { get; set; }
         public ICollection <PositionInfo> PositionInfos { get; set; }
-        public ICollection<Education> Educations { get; set; }
+        public virtual Education Education { get; set; }
     }
 }

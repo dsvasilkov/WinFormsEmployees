@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EmployeeFormsApp
-{
+{   
     public partial class MainForm : Form
     {
         private readonly DbConnect _context;
-        private string connectionString = "Host=localhost;Database=employees;Username=postgres;Password=root";
+        private string connectionString = "Host=localhost;Database=emloyees;Username=postgres;Password=admin";
         private int selectedEmployeeId;
         public MainForm(DbConnect context)
         {   
@@ -26,7 +26,6 @@ namespace EmployeeFormsApp
             _context = context;
             this.Load += MainForm_Load;
         }
-
         private async void MainForm_Load(object sender, EventArgs e)
         {
             await LoadEmployees();
@@ -36,40 +35,24 @@ namespace EmployeeFormsApp
         {
             var employees = await _context.TableEmployee.FromSqlInterpolated
                 ($"SELECT * FROM GetEmployees()").ToListAsync();
-                    
+
             var employeesWithoutId = employees.Select(el =>
                 new { Id = el.Id, Имя = el.Name, Фамилия = el.Surname, Отчество = el.Patronymic, Дата_трудоустройства = el.HireDate }).ToList();
             dataGridView1.DataSource = employeesWithoutId;
             dataGridView1.Columns["Id"].Visible = false;
 
         }
-        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            e.CellStyle.ForeColor = Color.Black; 
-        }
-        
 
-        private void changeEmployeeCard(object sender, EventArgs e)
-        {
-            EmployeesCardChange employeesCardChange = new EmployeesCardChange();
-            employeesCardChange.Show();
-        }
         private async void addEmployee(object sender, EventArgs e)
         {
             EmployeesAdd employeesAdd = new EmployeesAdd(_context);
-            
+
             var tcs = new TaskCompletionSource<bool>();
             employeesAdd.EmployeeAdded += (s, args) => tcs.SetResult(true);
             employeesAdd.Show();
             await tcs.Task;
-            
-            await LoadEmployees();
-        }
 
-        private void showEmployeeCard(object sender, EventArgs e)
-        {
-            EmployeesCardLook employeesCardLook = new EmployeesCardLook(selectedEmployeeId);
-            employeesCardLook.Show();
+            await LoadEmployees();
         }
 
         private async void deleteEmployee(object sender, EventArgs e)
@@ -83,13 +66,39 @@ namespace EmployeeFormsApp
                     selectedIds.Add((int)row.Cells["Id"].Value);
                 }
             }
-          
+
             await _context.Database.ExecuteSqlInterpolatedAsync
                 ($"CALL DeleteEmployeesByIds({selectedIds.ToArray()})");
             await LoadEmployees();
 
         }
-    
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            e.CellStyle.ForeColor = Color.Black; 
+        }
+        
+
+        private void changeEmployeeCard(object sender, EventArgs e)
+        {
+            EmployeesCardChange employeesCardLook = new EmployeesCardChange(selectedEmployeeId);
+            employeesCardLook.Show();
+        }
+        
+
+        private void showEmployeeCard(object sender, EventArgs e)
+        {
+            try
+            {
+                EmployeesCardLook employeesCardLook = new EmployeesCardLook(selectedEmployeeId);
+                employeesCardLook.Show();
+            }
+            catch
+            {
+                MessageBox.Show("Выберите одного сотрудника");
+            }
+        }
+
+
 
         private async void searchEmployee(object sender, EventArgs e)
         {
@@ -97,8 +106,12 @@ namespace EmployeeFormsApp
             var employees = await _context.TableEmployee.FromSqlInterpolated
                ($"SELECT * FROM SearchEmployee({searchValue})").ToListAsync();
             var employeesWithoutId = employees.Select(el =>
-            new { Имя = el.Name, Фамилия = el.Surname, Отчество = el.Patronymic,
-                Дата_трудоустройства = el.HireDate }).ToList();
+            new {
+                Имя = el.Name,
+                Фамилия = el.Surname,
+                Отчество = el.Patronymic,
+                Дата_трудоустройства = el.HireDate
+            }).ToList();
 
             dataGridView1.DataSource = employeesWithoutId;
 
@@ -109,8 +122,16 @@ namespace EmployeeFormsApp
 
             if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
             {
+
                 selectedEmployeeId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
             }
+            
+        }
+
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            await LoadEmployees();
+            MessageBox.Show("Данные успешно обновлены");
         }
     }
 }

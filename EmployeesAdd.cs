@@ -18,7 +18,7 @@ namespace EmployeeFormsApp
         public EmployeesAdd(DbConnect context)
         {
             InitializeComponent();
-            _context=context;
+            _context = context;
         }
         private async void addEmployee(object sender, EventArgs e)
         {

@@ -32,6 +32,7 @@ namespace EmployeeFormsApp
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
             this.searchInputField = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -41,9 +42,6 @@ namespace EmployeeFormsApp
             this.сотрудникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.посмотретьКарточкуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.изменитьКарточкуToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.фильтрыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.соритроватьПоВозрастаниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сортироватьПоУбываниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.сотрудникToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +57,7 @@ namespace EmployeeFormsApp
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.searchInputField);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.dataGridView1);
@@ -71,6 +70,17 @@ namespace EmployeeFormsApp
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 450);
             this.panel1.TabIndex = 0;
+            // 
+            // button3
+            // 
+            this.button3.ForeColor = System.Drawing.Color.Black;
+            this.button3.Location = new System.Drawing.Point(642, 86);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(98, 23);
+            this.button3.TabIndex = 12;
+            this.button3.Text = "Обновить";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // searchInputField
             // 
@@ -136,7 +146,6 @@ namespace EmployeeFormsApp
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.сотрудникиToolStripMenuItem,
-            this.фильтрыToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -167,28 +176,6 @@ namespace EmployeeFormsApp
             this.изменитьКарточкуToolStripMenuItem1.Size = new System.Drawing.Size(245, 26);
             this.изменитьКарточкуToolStripMenuItem1.Text = "Изменить карточку";
             this.изменитьКарточкуToolStripMenuItem1.Click += new System.EventHandler(this.changeEmployeeCard);
-            // 
-            // фильтрыToolStripMenuItem
-            // 
-            this.фильтрыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.соритроватьПоВозрастаниюToolStripMenuItem,
-            this.сортироватьПоУбываниюToolStripMenuItem});
-            this.фильтрыToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
-            this.фильтрыToolStripMenuItem.Name = "фильтрыToolStripMenuItem";
-            this.фильтрыToolStripMenuItem.Size = new System.Drawing.Size(89, 24);
-            this.фильтрыToolStripMenuItem.Text = "Фильтры ";
-            // 
-            // соритроватьПоВозрастаниюToolStripMenuItem
-            // 
-            this.соритроватьПоВозрастаниюToolStripMenuItem.Name = "соритроватьПоВозрастаниюToolStripMenuItem";
-            this.соритроватьПоВозрастаниюToolStripMenuItem.Size = new System.Drawing.Size(304, 26);
-            this.соритроватьПоВозрастаниюToolStripMenuItem.Text = "Соритровать по возрастанию ";
-            // 
-            // сортироватьПоУбываниюToolStripMenuItem
-            // 
-            this.сортироватьПоУбываниюToolStripMenuItem.Name = "сортироватьПоУбываниюToolStripMenuItem";
-            this.сортироватьПоУбываниюToolStripMenuItem.Size = new System.Drawing.Size(304, 26);
-            this.сортироватьПоУбываниюToolStripMenuItem.Text = "Сортировать по убыванию ";
             // 
             // выходToolStripMenuItem
             // 
@@ -264,13 +251,11 @@ namespace EmployeeFormsApp
         private System.Windows.Forms.ToolStripMenuItem сотрудникиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem посмотретьКарточкуToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem изменитьКарточкуToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem фильтрыToolStripMenuItem;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.ToolStripMenuItem соритроватьПоВозрастаниюToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem сортироватьПоУбываниюToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox searchInputField;
+        private Button button3;
     }
 }
 

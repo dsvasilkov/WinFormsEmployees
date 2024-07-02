@@ -16,14 +16,13 @@ namespace EmployeeFormsApp
         public DbSet<TableEmployee> TableEmployee { get; set; }
 
         public DbConnect()
-        {   
-            //Database.EnsureDeleted();
+        {
             Database.EnsureCreated();
         }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=employees;Username=postgres;Password=root");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=emloyees;Username=postgres;Password=admin");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,7 +32,7 @@ namespace EmployeeFormsApp
             modelBuilder.Entity<PositionInfo>().ToTable("positioninfos");
             modelBuilder.Entity<Position>().ToTable("positions");
             modelBuilder.Entity<Education>().ToTable("educations");
-           
+
             modelBuilder.Entity<Employee>()
                .HasOne(e => e.Branch)
                .WithMany(b => b.Employees)
@@ -62,9 +61,8 @@ namespace EmployeeFormsApp
 
             modelBuilder.Entity<Education>()
                 .HasOne(ed => ed.Employee)
-                .WithMany(e => e.Educations)
-                .HasForeignKey(ed => ed.EmployeeId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithOne(e => e.Education)
+                .HasForeignKey<Employee>(e => e.Id);      
         }
     }
 }
