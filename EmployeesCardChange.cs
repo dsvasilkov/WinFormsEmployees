@@ -17,25 +17,31 @@ namespace EmployeeFormsApp
     public partial class EmployeesCardChange : Form
     {
         private int employeeId;
-        private DbConnect context = new DbConnect();
-        private Employee employee; 
+        private DbConnect _context;
+        private Employee employee;
+        public event EventHandler EmployeeChanged;
 
         public EmployeesCardChange(int employeeId)
         {
             InitializeComponent();
             this.employeeId = employeeId;
-            LoadEmployeeData();
+            _context = new DbConnect();
+            this.Load += CardChangeForm_Load;
         }
+    private async void CardChangeForm_Load(object sender, EventArgs e)
+    {
+        await LoadEmployeeData();
+    }
 
-        private void LoadEmployeeData()
+    private async Task LoadEmployeeData()
         {
            
-            employee = context.Employees
+            employee = await _context.Employees
                 .Include(e => e.PositionInfos).ThenInclude(pi => pi.Position)
                 .Include(e => e.Branch)
                 .Include(e => e.Department)
                 .Include(e => e.Education)
-                .FirstOrDefault(e => e.Id == employeeId);
+                .FirstOrDefaultAsync(e => e.Id == employeeId);
 
             if (employee != null)
             {
@@ -81,9 +87,8 @@ namespace EmployeeFormsApp
             
         }
 
-        private void SaveEmployeeChanges()
+        private async Task SaveEmployeeChanges()
         {
-            
             employee.Name = textBox1.Text;
             employee.Surname = textBox2.Text;
             employee.Patronymic = textBox3.Text;
@@ -110,8 +115,10 @@ namespace EmployeeFormsApp
             employee.Education.Specialization = textBox14.Text;
             employee.Education.Institution = textBox15.Text;
             employee.Education.DateGrade = dateTimePicker4.Value;
-            context.SaveChanges();
+            await _context.SaveChangesAsync();
             MessageBox.Show("Данные успешно обновлены");
+            EmployeeChanged?.Invoke(this, EventArgs.Empty);
+
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -120,18 +127,18 @@ namespace EmployeeFormsApp
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            SaveEmployeeChanges();
+            await SaveEmployeeChanges();
         }
-        private void button4_Click(object sender, EventArgs e)
+        private async void button4_Click(object sender, EventArgs e)
         {
-            SaveEmployeeChanges();
+            await SaveEmployeeChanges();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private async void button6_Click(object sender, EventArgs e)
         {
-            SaveEmployeeChanges();
+            await SaveEmployeeChanges();
         }
 
         

@@ -22,7 +22,7 @@ namespace EmployeeFormsApp
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=emloyees;Username=postgres;Password=admin");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=employees;Username=postgres;Password=root");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -62,7 +62,10 @@ namespace EmployeeFormsApp
             modelBuilder.Entity<Education>()
                 .HasOne(ed => ed.Employee)
                 .WithOne(e => e.Education)
-                .HasForeignKey<Employee>(e => e.Id);      
+                .HasForeignKey<Education>(e => e.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+           
+        
         }
     }
 }

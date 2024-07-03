@@ -15,10 +15,10 @@ namespace EmployeeFormsApp
     {
         private readonly DbConnect _context;
         public event EventHandler EmployeeAdded;
-        public EmployeesAdd(DbConnect context)
+        public EmployeesAdd()
         {
             InitializeComponent();
-            _context = context;
+            _context = new DbConnect();
         }
         private async void addEmployee(object sender, EventArgs e)
         {

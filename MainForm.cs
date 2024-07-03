@@ -17,13 +17,13 @@ namespace EmployeeFormsApp
     public partial class MainForm : Form
     {
         private readonly DbConnect _context;
-        private string connectionString = "Host=localhost;Database=emloyees;Username=postgres;Password=admin";
+        private string connectionString = "Host=localhost;Database=employees;Username=postgres;Password=root";
         private int selectedEmployeeId;
-        public MainForm(DbConnect context)
+        public MainForm()
         {   
             InitializeComponent();
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            _context = context;
+            _context = new DbConnect();
             this.Load += MainForm_Load;
         }
         private async void MainForm_Load(object sender, EventArgs e)
@@ -33,19 +33,22 @@ namespace EmployeeFormsApp
 
         private async Task LoadEmployees()
         {
-            var employees = await _context.TableEmployee.FromSqlInterpolated
+            using (var context = new DbConnect())
+            {
+                var employees = await context.TableEmployee.FromSqlInterpolated
                 ($"SELECT * FROM GetEmployees()").ToListAsync();
 
-            var employeesWithoutId = employees.Select(el =>
-                new { Id = el.Id, Имя = el.Name, Фамилия = el.Surname, Отчество = el.Patronymic, Дата_трудоустройства = el.HireDate }).ToList();
-            dataGridView1.DataSource = employeesWithoutId;
-            dataGridView1.Columns["Id"].Visible = false;
-
+                var Employees = employees.Select(el =>
+                    new { Id = el.Id, Имя = el.Name, Фамилия = el.Surname,
+                        Отчество = el.Patronymic, Дата_трудоустройства = el.HireDate }).ToList();
+                dataGridView1.DataSource = Employees;
+                dataGridView1.Columns["Id"].Visible = false;
+            }
         }
 
         private async void addEmployee(object sender, EventArgs e)
         {
-            EmployeesAdd employeesAdd = new EmployeesAdd(_context);
+            EmployeesAdd employeesAdd = new EmployeesAdd();
 
             var tcs = new TaskCompletionSource<bool>();
             employeesAdd.EmployeeAdded += (s, args) => tcs.SetResult(true);
@@ -78,10 +81,14 @@ namespace EmployeeFormsApp
         }
         
 
-        private void changeEmployeeCard(object sender, EventArgs e)
+        private async void changeEmployeeCard(object sender, EventArgs e)
         {
-            EmployeesCardChange employeesCardLook = new EmployeesCardChange(selectedEmployeeId);
-            employeesCardLook.Show();
+            EmployeesCardChange employeesCardChange = new EmployeesCardChange(selectedEmployeeId);
+            var tcs = new TaskCompletionSource<bool>();
+            employeesCardChange.EmployeeChanged += (s, args) => tcs.SetResult(true);
+            employeesCardChange.Show();
+            await tcs.Task;
+            await LoadEmployees();
         }
         
 

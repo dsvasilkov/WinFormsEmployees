@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace EmployeeFormsApp
 {
     
     public class Employee
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
