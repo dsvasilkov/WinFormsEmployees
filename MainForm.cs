@@ -94,15 +94,16 @@ namespace EmployeeFormsApp
 
         private void showEmployeeCard(object sender, EventArgs e)
         {
-            try
-            {
+           // try
+            //{
                 EmployeesCardLook employeesCardLook = new EmployeesCardLook(selectedEmployeeId);
                 employeesCardLook.Show();
-            }
-            catch
-            {
-                MessageBox.Show("Выберите одного сотрудника");
-            }
+            //}
+            //catch(Exception ex)
+            //{
+            //    MessageBox.Show($"Ошибка открытия карточки: {ex}");
+            //}
+            
         }
 
 

@@ -32,6 +32,6 @@ namespace EmployeeFormsApp
         public virtual Branch Branch { get; set; }
         public virtual Department Department { get; set; }
         public ICollection <PositionInfo> PositionInfos { get; set; }
-        public virtual Education Education { get; set; }
+        public virtual Education Education { get; set; } 
     }
 }

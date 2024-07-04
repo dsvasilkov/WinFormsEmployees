@@ -22,7 +22,7 @@ namespace EmployeeFormsApp
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=employees;Username=postgres;Password=root");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=employees;Username=postgres;Password=admin");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

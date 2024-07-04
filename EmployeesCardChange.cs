@@ -42,15 +42,15 @@ namespace EmployeeFormsApp
                 .Include(e => e.Department)
                 .Include(e => e.Education)
                 .FirstOrDefaultAsync(e => e.Id == employeeId);
-
+            
             if (employee != null)
             {
-                
+
                 textBox1.Text = employee.Name;
                 textBox2.Text = employee.Surname;
                 textBox3.Text = employee.Patronymic;
                 textBox4.Text = employee.Gender;
-                dateTimePicker1.Value = employee.BirthDate.Value;
+                dateTimePicker1.Value = employee.BirthDate == null ? DateTime.Now : employee.BirthDate.Value;
                 textBox6.Text = employee.Address;
                 textBox7.Text = string.Join(", ", employee.PositionInfos.Select(pi => pi.Position.Name));
                 textBox8.Text = employee.INN;
@@ -63,13 +63,13 @@ namespace EmployeeFormsApp
                 textBox22.Text = employee.Department?.Head;
                 textBox9.Text = employee.PassportSeries;
                 textBox10.Text = employee.PassportNumber;
-                dateTimePicker2.Value = employee.PassportIssueDate.Value;
+                dateTimePicker2.Value = employee.PassportIssueDate == null ? DateTime.Now : employee.PassportIssueDate.Value;
                 textBox19.Text = employee.PassportIssueBy;
                 textBox20.Text = employee.PositionInfos.Select(pi => pi.Position.Salary).FirstOrDefault().ToString();
-                textBox13.Text = employee.Education.EducationLevel;
-                textBox14.Text = employee.Education.Specialization;
-                textBox15.Text = employee.Education.Institution;
-                dateTimePicker4.Value = employee.Education.DateGrade;
+                textBox13.Text = employee.Education?.EducationLevel;
+                textBox14.Text = employee.Education?.Specialization;
+                textBox15.Text = employee.Education?.Institution;
+                dateTimePicker4.Value = employee.Education?.DateGrade == null ? DateTime.Now : employee.Education.DateGrade;
                 /*try
                 {
                     pictureBox1.Image = Image.FromFile(employee.PhotoPath);
@@ -95,26 +95,86 @@ namespace EmployeeFormsApp
             employee.Gender = textBox4.Text;
             employee.BirthDate = dateTimePicker1.Value;
             employee.Address = textBox6.Text;
-            employee.PositionInfos.First().Position.Name = textBox7.Text;
+            if (employee.PositionInfos != null)
+            {
+                var posInfo = new PositionInfo()
+                {
+                    Position = new Position()
+                    {
+                        Name = textBox7.Text,
+                        Salary = int.Parse(textBox20.Text)
+
+                    }
+                };
+
+            }
+            else
+            {
+                employee.PositionInfos.First().Position.Name = textBox7.Text;
+                employee.PositionInfos.First().Position.Salary = int.Parse(textBox20.Text);
+
+            }
+            
             employee.INN = textBox8.Text;
             employee.SNILS = textBox5.Text;
             
             employee.PhoneNumber = textBox17.Text;
             employee.Email = textBox16.Text;
             employee.HireDate = dateTimePicker5.Value;
-            employee.Branch.Name = textBox13.Text;
-            employee.Department.Name = textBox21.Text;
-            employee.Department.Head = textBox22.Text;
-            employee.PositionInfos.First().Position.Salary = int.Parse(textBox20.Text);
+            if (employee.Branch == null)
+            {
+                employee.Branch = new Branch()
+                {
+                    Name = textBox13.Text,
+
+                    Location = "ad"
+                };
+                
+            }
+            else
+            {
+                employee.Branch.Name = textBox13.Text;
+            }
+            if (employee.Department == null)
+            {
+                employee.Department = new Department()
+                {
+                    Name = textBox21.Text,
+                    Head = textBox22.Text
+                };
+               
+            }
+            else
+            {
+                employee.Department.Name = textBox21.Text;
+                employee.Department.Head = textBox22.Text;
+            }
+            
+            
             employee.PassportSeries = textBox9.Text;
             employee.PassportNumber = textBox10.Text;
             employee.PassportIssueDate = dateTimePicker2.Value;
             employee.PassportIssueBy = textBox19.Text;
             employee.Address = textBox11.Text;
-            employee.Education.EducationLevel = textBox13.Text;
-            employee.Education.Specialization = textBox14.Text;
-            employee.Education.Institution = textBox15.Text;
-            employee.Education.DateGrade = dateTimePicker4.Value;
+            if (employee.Education == null)
+            {
+                employee.Education = new Education()
+                {
+                    EducationLevel = textBox13.Text,
+                    Specialization = textBox14.Text,
+                    Institution = textBox15.Text,
+                    DateGrade = dateTimePicker4.Value
+                };
+                
+            }
+            else
+            {
+                employee.Education.EducationLevel = textBox13.Text;
+                employee.Education.Specialization = textBox14.Text;
+                employee.Education.Institution = textBox15.Text;
+                employee.Education.DateGrade = dateTimePicker4.Value;
+            }
+            
             await _context.SaveChangesAsync();
             MessageBox.Show("Данные успешно обновлены");
             EmployeeChanged?.Invoke(this, EventArgs.Empty);

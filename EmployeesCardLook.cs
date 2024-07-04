@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Internal;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace EmployeeFormsApp
     public partial class EmployeesCardLook : Form
     {
         private int employeeId;
+        private DbConnect _context;
+        private Employee employee;
 
         public EmployeesCardLook(int employeeId)
         {
@@ -45,8 +48,9 @@ namespace EmployeeFormsApp
             textBox14.ReadOnly = true;
             textBox15.ReadOnly = true;
             textBox15.ReadOnly = true;
+            this.employeeId = employeeId;
+            _context = new DbConnect();
             LoadEmployeeData();
-
 
 
         }
@@ -55,69 +59,49 @@ namespace EmployeeFormsApp
         {
             using (var context = new DbConnect())
             {
-                var employee = context.Employees
-                    
-                    .Where(e => e.Id == employeeId)
-                    .Select(e => new
-                    {
-                        e.Name,
-                        e.Surname,
-                        e.Patronymic,
-                        e.Gender,
-                        e.BirthDate,
-                        e.Address,
-                        PositionInfos = e.PositionInfos.Select(pi => pi.Position).ToList(),
-                        e.INN,
-                        e.SNILS,
-                        e.PhoneNumber,
-                        e.Email,
-                        e.HireDate,
-                        BranchName = e.Branch.Name,
-                        DepartmentName = e.Department.Name,
-                        DepartmentHead = e.Department.Head,
-                        Positions = e.PositionInfos.Select(pi => pi.Position).Select(a => a.Name).FirstOrDefault(),
-                        e.PassportSeries,
-                        e.PassportNumber,
-                        e.PassportIssueDate,
-                        e.PassportIssueBy,
-                        e.PhotoPath,
-                        Salary = e.PositionInfos.Select(pi => pi.Position).Select(a => a.Salary).FirstOrDefault(),
-                        EducationsLevel = e.Education.EducationLevel,
-                        EducationsSpecialization = e.Education.Specialization,
-                        EducationsInstitution = e.Education.Institution,
-                        Date = e.Education.DateGrade,
-                        
-                    })
-                    .FirstOrDefault();
-                
+                employee =  _context.Employees
+                .Include(e => e.PositionInfos).ThenInclude(pi => pi.Position)
+                .Include(e => e.Branch)
+                .Include(e => e.Department)
+                .Include(e => e.Education)
+                .FirstOrDefault(e => e.Id == employeeId);
+                if (employee != null)
+                {
+
                     textBox1.Text = employee.Name;
                     textBox2.Text = employee.Surname;
                     textBox3.Text = employee.Patronymic;
                     textBox4.Text = employee.Gender;
-                    dateTimePicker1.Value = employee.BirthDate.Value; 
+                    dateTimePicker1.Value = employee.BirthDate == null ? DateTime.Now : employee.BirthDate.Value;
                     textBox6.Text = employee.Address;
-                    textBox7.Text = string.Join(", ", employee.Positions);
+                    textBox7.Text = string.Join(", ", employee.PositionInfos.Select(pi => pi.Position.Name));
                     textBox8.Text = employee.INN;
                     textBox5.Text = employee.SNILS;
                     textBox17.Text = employee.PhoneNumber;
                     textBox16.Text = employee.Email;
-                    dateTimePicker5.Value = employee.HireDate; 
-                    textBox18.Text = employee.BranchName;
-                    textBox21.Text = employee.DepartmentName;
-                    textBox22.Text = employee.DepartmentHead;
+                    dateTimePicker5.Value = employee.HireDate;
+                    textBox18.Text = employee.Branch?.Name;
+                    textBox21.Text = employee.Department?.Name;
+                    textBox22.Text = employee.Department?.Head;
                     textBox9.Text = employee.PassportSeries;
                     textBox10.Text = employee.PassportNumber;
-                    dateTimePicker2.Value = employee.PassportIssueDate.Value; 
+                    dateTimePicker2.Value = employee.PassportIssueDate == null ? DateTime.Now : employee.PassportIssueDate.Value;
                     textBox19.Text = employee.PassportIssueBy;
-                    textBox11.Text = employee.Address;
-                    textBox20.Text = string.Join(", ", employee.Salary);
-                    textBox5.Text = employee.SNILS;
-                    textBox13.Text = string.Join(", ", employee.EducationsLevel);
-                    textBox14.Text = string.Join(", ", employee.EducationsSpecialization);
-                    textBox15.Text = string.Join(", ", employee.EducationsInstitution);
-                    textBox15.Text = string.Join(", ", employee.EducationsInstitution);
-                    dateTimePicker4.Value =  employee.Date;
-                    //pictureBox1.Image = Image.FromFile(employee.PhotoPath);
+                    textBox20.Text = employee.PositionInfos.Select(pi => pi.Position.Salary).FirstOrDefault().ToString();
+                    textBox13.Text = employee.Education?.EducationLevel;
+                    textBox14.Text = employee.Education?.Specialization;
+                    textBox15.Text = employee.Education?.Institution;
+                    dateTimePicker4.Value = employee.Education?.DateGrade == null ? DateTime.Now : employee.Education.DateGrade;
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Сотрудник не найден в базе данных.");
+                    this.Close();
+                }
+
+
+              
             }
         }
 
