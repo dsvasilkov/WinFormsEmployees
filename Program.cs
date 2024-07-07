@@ -278,7 +278,7 @@ namespace EmployeeFormsApp
                 }
             }
 
-            string connectionString = "Host=localhost;Database=employees;Username=postgres;Password=admin";
+            string connectionString = "Host=localhost;Database=employees;Username=postgres;Password=root";
             string createFunctionGetEmployees = @"
                 CREATE OR REPLACE FUNCTION GetEmployees()
                 RETURNS TABLE (Id INTEGER, Name TEXT, Surname TEXT, Patronymic TEXT,

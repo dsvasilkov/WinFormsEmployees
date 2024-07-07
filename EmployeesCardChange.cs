@@ -28,10 +28,7 @@ namespace EmployeeFormsApp
             _context = new DbConnect();
             this.Load += CardChangeForm_Load;
         }
-    private async void CardChangeForm_Load(object sender, EventArgs e)
-    {
-        await LoadEmployeeData();
-    }
+    private async void CardChangeForm_Load(object sender, EventArgs e) => await LoadEmployeeData();
 
     private async Task LoadEmployeeData()
         {
