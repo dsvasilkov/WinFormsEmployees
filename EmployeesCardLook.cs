@@ -50,21 +50,22 @@ namespace EmployeeFormsApp
             textBox15.ReadOnly = true;
             this.employeeId = employeeId;
             _context = new DbConnect();
-            LoadEmployeeData();
-
-
+            this.Load += CardLookForm_Load;
         }
+        
+    private async void CardLookForm_Load(object sender, EventArgs e) => await LoadEmployeeData();
 
-        private void LoadEmployeeData()
+
+    private async Task LoadEmployeeData()
         {
             using (var context = new DbConnect())
             {
-                employee =  _context.Employees
+                employee =  await _context.Employees
                 .Include(e => e.PositionInfos).ThenInclude(pi => pi.Position)
                 .Include(e => e.Branch)
                 .Include(e => e.Department)
                 .Include(e => e.Education)
-                .FirstOrDefault(e => e.Id == employeeId);
+                .FirstOrDefaultAsync(e => e.Id == employeeId);
                 if (employee != null)
                 {
 

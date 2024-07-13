@@ -36,7 +36,7 @@
             this.Name = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.HireDate = new System.Windows.Forms.TextBox();
+            this.HireDate = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // label1
@@ -116,11 +116,11 @@
             // 
             // HireDate
             // 
-            this.HireDate.Location = new System.Drawing.Point(330, 209);
-            this.HireDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.HireDate.Location = new System.Drawing.Point(330, 214);
             this.HireDate.Name = "HireDate";
             this.HireDate.Size = new System.Drawing.Size(306, 31);
             this.HireDate.TabIndex = 8;
+            
             // 
             // EmployeesAdd
             // 
@@ -137,7 +137,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-
+            
             this.Text = "Добавление сотрудника ";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -154,6 +154,6 @@
         private System.Windows.Forms.TextBox Name;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox HireDate;
+        private System.Windows.Forms.DateTimePicker HireDate;
     }
 }

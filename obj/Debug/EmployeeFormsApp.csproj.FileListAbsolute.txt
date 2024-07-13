@@ -61,7 +61,6 @@ C:\Users\Dmitry\source\repos\SystemForEmployees2\bin\Debug\System.Threading.Task
 C:\Users\Dmitry\source\repos\SystemForEmployees2\bin\Debug\System.ValueTuple.xml
 C:\Users\Dmitry\source\repos\SystemForEmployees2\obj\Debug\EmployeeFormsApp.csproj.AssemblyReference.cache
 C:\Users\Dmitry\source\repos\SystemForEmployees2\obj\Debug\EmployeeFormsApp.EmployeesAdd.resources
-C:\Users\Dmitry\source\repos\SystemForEmployees2\obj\Debug\EmployeeFormsApp.EmployeesCardChange.resources
 C:\Users\Dmitry\source\repos\SystemForEmployees2\obj\Debug\EmployeeFormsApp.EmployeesCardLook.resources
 C:\Users\Dmitry\source\repos\SystemForEmployees2\obj\Debug\EmployeeFormsApp.MainForm.resources
 C:\Users\Dmitry\source\repos\SystemForEmployees2\obj\Debug\EmployeeFormsApp.Properties.Resources.resources
@@ -70,3 +69,5 @@ C:\Users\Dmitry\source\repos\SystemForEmployees2\obj\Debug\EmployeeFormsApp.cspr
 C:\Users\Dmitry\source\repos\SystemForEmployees2\obj\Debug\Employee.CCFFE79C.Up2Date
 C:\Users\Dmitry\source\repos\SystemForEmployees2\obj\Debug\EmployeeFormsApp.exe
 C:\Users\Dmitry\source\repos\SystemForEmployees2\obj\Debug\EmployeeFormsApp.pdb
+C:\Users\Dmitry\source\repos\SystemForEmployees2\bin\Debug\Ude.NetStandard.dll
+C:\Users\Dmitry\source\repos\SystemForEmployees2\obj\Debug\EmployeeFormsApp.EmployeesCardChange.resources

@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Windows.Forms;
 namespace EmployeeFormsApp
@@ -67,5 +68,7 @@ namespace EmployeeFormsApp
            
         
         }
+     
     }
+    
 }

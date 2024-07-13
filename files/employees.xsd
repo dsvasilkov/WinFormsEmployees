@@ -1,30 +1,94 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:element name="Employees">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+           vc:minVersion="1.1">
+<xs:element name="Employees">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="Employee" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="Name" type="xs:string" minOccurs="1" />
-                            <xs:element name="Surname" type="xs:string" minOccurs="1" />
-                            <xs:element name="Patronymic" type="xs:string" minOccurs="0" />
-                            <xs:element name="Gender" type="xs:string" minOccurs="0" />
-                            <xs:element name="BirthDate" type="xs:date" minOccurs="0" />
-                            <xs:element name="Address" type="xs:string" minOccurs="0" />
-                            <xs:element name="PhoneNumber" type="xs:string" minOccurs="0" />
-                            <xs:element name="Email" type="xs:string" minOccurs="0" />
-                            <xs:element name="HireDate" type="xs:date" minOccurs="0" />
-                            <xs:element name="INN" type="xs:string" minOccurs="0" />
-                            <xs:element name="SNILS" type="xs:string" minOccurs="0" />
-                            <xs:element name="PassportSeries" type="xs:string" minOccurs="0" />
-                            <xs:element name="PassportNumber" type="xs:string" minOccurs="0" />
-                            <xs:element name="PassportIssueDate" type="xs:date" minOccurs="0" />
-                            <xs:element name="PassportIssueBy" type="xs:string" minOccurs="0" />
-                            <xs:element name="PlaceOfReg" type="xs:string" minOccurs="0" />
-                            <xs:element name="PhotoPath" type="xs:string" minOccurs="0" />
-                            <xs:element name="BranchId" type="xs:int" minOccurs="0" />
-                            <xs:element name="DepartmentId" type="xs:int" minOccurs="0" />
+                            <xs:element name="Name" minOccurs="1">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="2"/>
+                                        <xs:maxLength value="50"/>
+                                        <xs:pattern value="^[А-Яа-яЁёA-Za-z\s]+$"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="Surname" minOccurs="1">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="2"/>
+                                        <xs:maxLength value="50"/>
+                                        <xs:pattern value="^[А-Яа-яЁёA-Za-z\s]+$"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="Patronymic" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="2"/>
+                                        <xs:maxLength value="50"/>
+                                        <xs:pattern value="^[А-Яа-яЁёA-Za-z\s]*$"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="Gender" type="xs:string" minOccurs="0"/>
+                            <xs:element name="BirthDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="Address" type="xs:string" minOccurs="0"/>
+                            <xs:element name="PhoneNumber" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:pattern value="^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="Email" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:pattern value="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="HireDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="INN" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:pattern value="^\d{12}$"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="SNILS" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:pattern value="^\d{11}$"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="PassportSeries" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:pattern value="^\d{4}$"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="PassportNumber" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:pattern value="^\d{6}$"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="PassportIssueDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="PassportIssueBy" type="xs:string" minOccurs="0"/>
+                            <xs:element name="PlaceOfReg" type="xs:string" minOccurs="0"/>
+                            <xs:element name="PhotoPath" type="xs:string" minOccurs="0"/>
+                            <xs:element name="BranchId" type="xs:int" minOccurs="0"/>
+                            <xs:element name="DepartmentId" type="xs:int" minOccurs="0"/>
+                            <xs:element name="PositionId" type="xs:int" minOccurs="0"/>
+                            <xs:element name="Salary" type="xs:decimal" minOccurs="0"/>
+                            <xs:element name="IsFired" type="xs:boolean" minOccurs="0"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

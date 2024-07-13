@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Employees xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="employees.xsd">
     <Employee>
-        <Name>РџС‘С‚СЂ</Name>
-        <Surname>РџРµС‚СЂРѕРІ</Surname>
-        <Patronymic>РџРµС‚СЂРѕРІРёС‡</Patronymic>
-        <Gender>Рњ</Gender>
+        <Name>Пётр</Name>
+        <Surname>Петров</Surname>
+        <Patronymic>Петрович</Patronymic>
+        <Gender>М</Gender>
         <BirthDate>1985-06-15</BirthDate>
-        <Address>РџСЂ. Р›РµРЅРёРЅР°, 1</Address>
+        <Address>Пр. Ленина, 1</Address>
         <PhoneNumber>89008001234</PhoneNumber>
         <Email>petr@example.com</Email>
         <HireDate>2020-01-10</HireDate>
@@ -15,19 +15,19 @@
         <PassportSeries>1234</PassportSeries>
         <PassportNumber>567890</PassportNumber>
         <PassportIssueDate>2005-04-20</PassportIssueDate>
-        <PassportIssueBy>РњР’Р”</PassportIssueBy>
-        <PlaceOfReg>Р§РµР±РѕРєСЃР°СЂС‹</PlaceOfReg>
-        <PhotoPath>C:\\Users\\РђР»РµРєСЃР°РЅРґСЂ\\EmployeeFormsApp\\Photo\\Dog.jpg</PhotoPath>
+        <PassportIssueBy>МВД</PassportIssueBy>
+        <PlaceOfReg>Чебоксары</PlaceOfReg>
+        <PhotoPath>C:\\Users\\Александр\\EmployeeFormsApp\\Photo\\Dog.jpg</PhotoPath>
         <BranchId>3</BranchId>
         <DepartmentId>1</DepartmentId>
     </Employee>
     <Employee>
-        <Name>Р•РєР°С‚РµСЂРёРЅР°</Name>
-        <Surname>РЇРєРѕРІР»РµРІР°</Surname>
-        <Patronymic>РЎРµСЂРіРµРµРІРЅР°</Patronymic>
-        <Gender>Р–</Gender>
+        <Name>Екатерина</Name>
+        <Surname>Яковлева</Surname>
+        <Patronymic>Сергеевна</Patronymic>
+        <Gender>Ж</Gender>
         <BirthDate>1990-09-25</BirthDate>
-        <Address>РџСЂ. РРІР°РЅР° РЇРєРѕРІР»РµРІР°</Address>
+        <Address>Пр. Ивана Яковлева</Address>
         <PhoneNumber>89234567890</PhoneNumber>
         <Email>ekaterina@example.com</Email>
         <HireDate>2021-05-15</HireDate>
@@ -36,14 +36,14 @@
         <PassportSeries>4321</PassportSeries>
         <PassportNumber>098765</PassportNumber>
         <PassportIssueDate>2010-08-10</PassportIssueDate>
-        <PassportIssueBy>РњР’Р”</PassportIssueBy>
-        <PlaceOfReg>Р§РµР±РѕРєСЃР°СЂС‹</PlaceOfReg>
-        <PhotoPath>C:\\Users\\РђР»РµРєСЃР°РЅРґСЂ\\EmployeeFormsApp\\Photo\\Dog.jpg</PhotoPath>
+        <PassportIssueBy>МВД</PassportIssueBy>
+        <PlaceOfReg>Чебоксары</PlaceOfReg>
+        <PhotoPath>C:\\Users\\Александр\\EmployeeFormsApp\\Photo\\Dog.jpg</PhotoPath>
         <BranchId>3</BranchId>
         <DepartmentId>1</DepartmentId>
     </Employee>
      <Employee>
-        <Name>Р”</Name>
-        <Surname>РЎРјРёС‚</Surname>
+        <Name>Джон</Name>
+        <Surname>Смит</Surname>
     </Employee>
 </Employees>

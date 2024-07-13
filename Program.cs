@@ -127,7 +127,7 @@ namespace EmployeeFormsApp
                         PlaceOfReg = "Яковлева",
                         PhotoPath = "C:\\Users\\Александр\\source\\EmployeeFormsApp\\Photo\\Dog1.jpg",
                         Branch = bra3,
-                        Department = dep2
+                        Department = dep1
                     };
                     var employee3 = new Employee()
                     {
@@ -281,7 +281,7 @@ namespace EmployeeFormsApp
             string connectionString = "Host=localhost;Database=employees;Username=postgres;Password=root";
             string createFunctionGetEmployees = @"
                 CREATE OR REPLACE FUNCTION GetEmployees()
-                RETURNS TABLE (Id INTEGER, Name TEXT, Surname TEXT, Patronymic TEXT,
+                RETURNS TABLE (Id INTEGER, Name VARCHAR, Surname VARCHAR, Patronymic VARCHAR,
                     HireDate TIMESTAMP)
                 LANGUAGE plpgsql
                 AS $$
@@ -289,12 +289,18 @@ namespace EmployeeFormsApp
                     RETURN QUERY SELECT e.""Id"",e.""Name"", e.""Surname"" , e.""Patronymic"" , e.""HireDate"" FROM employees as e;
                 END;
                 $$;
+                ALTER TABLE employees DROP CONSTRAINT IF EXISTS check_first_name_length;
+                ALTER TABLE employees DROP CONSTRAINT IF EXISTS check_last_name_length;
+                ALTER TABLE employees DROP CONSTRAINT IF EXISTS check_middle_name_length;
+                ALTER TABLE employees ADD CONSTRAINT check_first_name_length CHECK (LENGTH(employees.""Name"") >= 2);
+                ALTER TABLE employees ADD CONSTRAINT check_last_name_length CHECK (LENGTH(employees.""Surname"") >= 2);
+                ALTER TABLE employees ADD CONSTRAINT check_middle_name_length CHECK (LENGTH(employees.""Patronymic"") >= 2);
             ";
             string createProcedureAddEmployee = @"
                 CREATE OR REPLACE PROCEDURE AddEmployee(
-                IN pname TEXT,
-                IN psurname TEXT,
-                IN ppatronymic TEXT,
+                IN pname VARCHAR,
+                IN psurname VARCHAR,
+                IN ppatronymic VARCHAR,
                 IN phiredate TIMESTAMP
                 )
                 LANGUAGE plpgsql
@@ -316,7 +322,7 @@ namespace EmployeeFormsApp
             ";
             string createFunctionSearchEmployee = @"
                 CREATE OR REPLACE FUNCTION SearchEmployee(search TEXT)
-                    RETURNS TABLE (Id INTEGER, Name TEXT, Surname TEXT, Patronymic TEXT,
+                    RETURNS TABLE (Id INTEGER, Name VARCHAR, Surname VARCHAR, Patronymic VARCHAR,
                     HireDate TIMESTAMP)
                     AS $$
                     BEGIN
@@ -328,7 +334,7 @@ namespace EmployeeFormsApp
                     $$ LANGUAGE plpgsql;
             ";
 
-
+            /*
             string createProcedureGetInfoEmployee = @"
             CREATE OR REPLACE PROCEDURE GetInfoEmployee(
                 IN empId INTEGER
@@ -352,7 +358,7 @@ namespace EmployeeFormsApp
 
             ";
 
-            /*string createProcedureChangeBasicInfo = @"
+            string createProcedureChangeBasicInfo = @"
             CREATE PROCEDURE ChangeBasicInfoEmployee
                 AS
                 BEGIN
@@ -368,8 +374,7 @@ namespace EmployeeFormsApp
                 connection.Open();
                 NpgsqlCommand command = new NpgsqlCommand(createFunctionGetEmployees, connection);
                 command.ExecuteNonQuery();
-                command = new NpgsqlCommand(createProcedureGetInfoEmployee, connection);
-                command.ExecuteNonQuery();
+               
                 command = new NpgsqlCommand(createProcedureAddEmployee, connection);
                 command.ExecuteNonQuery();
                 command = new NpgsqlCommand(createProcedureDeleteEmployees, connection);
